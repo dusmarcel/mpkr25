@@ -4,7 +4,9 @@ use yew::prelude::*;
 fn App() -> Html {
     html! {
         <div>
-            <h1>{"Migrationsrechtlicher Prozesskostenrechner (Stand 2025)"}</h1>
+            <h1 class={classes!("container", "max-w-screen-xl", "mx-auto", "px-4", "bg-blue-100")}>
+                {"Migrationsrechtlicher Prozesskostenrechner (Stand 2025)"}
+            </h1>
         </div>
     }
 }
