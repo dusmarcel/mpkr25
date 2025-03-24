@@ -16,6 +16,17 @@ fn App() -> Html {
             </div>
             <div class={classes!("container", "max-w-screen-xl", "mx-auto", "px-4", "bg-linear-to-b", "from-stone-50", "to-stone-300")}>
                 <h2 class={classes!("pt-4", "text-2xl", "font-medium")}>
+                    {"Streitwerte"}
+                </h2>
+                <p>
+                    {"Grundlage für die Berechnung der Gebühren ist der sogenannte Streitwert. Wir müssen also zuerst die Streitwerte für deine Angelegenheit ermitteln. Plural, weil gerade in gerichtlichen Verfahren häufig zusätzlich zur Klage noch ein Antrag auf Gewährung vorläufigen Rechtsschutzes erforderlich ist. Manchmal wird auch nur ein Antrag auf vorläufigen Rechtsschutz gestellt. Deswegen kann man hier verschiedene Optionen wählen. Außerdem hängt die konkrete Höhe des Streitwerts auch von der Anzahl der Personen ab, die in einem Verfahren zusammengefasst werden."}
+                </p>
+                <p>
+                    {"Wähle aus, ob die Gebühren nur für ein Hauptsacheverfahren, nur für dein Verfahren zum vorläufigen Rechtsschutz, oder für beides berechnet werden sollen."}
+                </p>
+            </div>
+            <div class={classes!("container", "max-w-screen-xl", "mx-auto", "px-4", "bg-linear-to-b", "from-stone-50", "to-stone-300")}>
+                <h2 class={classes!("pt-4", "text-2xl", "font-medium")}>
                     {"Rechtliche Hinweise"}
                 </h2>
                 <p>
