@@ -27,10 +27,28 @@ fn App() -> Html {
                         zum vorläufigen Rechtsschutz, oder für beides berechnet werden sollen."}</label>
                     </p>
                     <p>
-                        <select class="form-select" aria-label="Auswahl der Verfahrensart" id="verfahren">
-                            <option value="0">{"Nur Hauptsacheverfahren"}</option>
+                        <select class={classes!("border-2", "border-stone-400", "rounded-lg", "p-1")} aria-label="Auswahl der Verfahrensart" id="verfahren">
+                            <option value="0" selected=true>{"Nur Hauptsacheverfahren"}</option>
                             <option value="1">{"Nur Verfahren zum vorläufigen Rechtsschutz"}</option>
                             <option value="2">{"Hauptsacheverfahren und Verfahren zum vorläufigen Rechtsschutz"}</option>
+                        </select>
+                    </p>
+                    <p>
+                        <label for="thema">{"Wähle ein Thema, dann versucht der Rechner, dir die passenden Streitwerte vorzuschlagen.
+                        Du kannst aber auch manuell selbst Streitwerte angeben."}</label>
+                    </p>
+                    <p>
+                        <select class={classes!("border-2", "border-stone-400", "rounded-lg", "p-1")} aria-label="Auswahl des Themas" id="thema">
+                        <option value="0">{"Asylrecht: Zulässigkeit (z.B. Dublin, Drittstaatenfall, Folgeantrag)"}</option>
+                        <option value="1">{"Asylrecht: Anerkennungsverfahren"}</option>
+                        <option value="2">{"Asylrecht: Widerruf/Rücknahme"}</option>
+                        <option value="3">{"Asylrecht: Untätigkeitsklage"}</option>
+                        <option value="4" selected=true>{"Aufenthaltsrecht: Aufenthaltstitel inkl. Untätigkeitsklage"}</option>
+                        <option value="5">{"Ausweisung"}</option>
+                        <option value="6">{"Pass/Passersatz"}</option>
+                        <option value="7">{"Aufenthaltsrecht: Duldung und Abschiebung inkl. Ausbildungs-/Beschäftigungsduldung,
+                            Untätigkeitsklage"}</option>
+                        <option value="8">{"Einbürgerung und Feststellung der Staatsangehörigkeit"}</option>
                         </select>
                     </p>
                 </div>
