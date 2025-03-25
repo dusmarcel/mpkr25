@@ -28,7 +28,10 @@
 **/values.dev.yaml
 /bin
 /target
-LICENSE
+LICENSE_APACHE
+LICENSE_MIT
 README.md
+README.Docker.md
 
 input.css
+/dist
