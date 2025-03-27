@@ -3,20 +3,20 @@ use yew::prelude::*;
 #[function_component]
 fn App() -> Html {
     html! {
-        <>
+        <div class="container">
             <form>
-                <div class={classes!("container", "max-w-screen-xl", "mx-auto", "px-4", "bg-linear-to-b", "from-stone-50", "to-stone-300")}>
-                    <h1 class={classes!("pt-4", "text-3xl", "font-medium")}>
+                <div class={classes!("graydient")}>
+                    <h1>
                         {"Migrationsrechtlicher Prozesskostenrechner (Stand 2025)"}
                     </h1>
-                    <p>
+                    <p  class={classes!("mb-0")}>
                         {"Erstellt von "}
-                        <a href="https://aufentha.lt" class={classes!("text-blue-600", "hover:underline", "hover:text-violet-600")}>{"Marcel Keienborg"}</a>
+                        <a href="https://aufentha.lt">{"Marcel Keienborg"}</a>
                         {". Bitte beachte unbedingt auch die Hinweise unten auf dieser Seite."}
                     </p>
                 </div>
-                <div class={classes!("container", "max-w-screen-xl", "mx-auto", "px-4", "bg-linear-to-b", "from-stone-50", "to-stone-300")}>
-                    <h2 class={classes!("pt-4", "text-2xl", "font-medium")}>
+                <div class={classes!("graydient")}>
+                    <h2>
                         {"Streitwerte"}
                     </h2>
                     <p>
@@ -27,7 +27,7 @@ fn App() -> Html {
                         zum vorläufigen Rechtsschutz, oder für beides berechnet werden sollen."}</label>
                     </p>
                     <p>
-                        <select class={classes!("border-2", "border-stone-400", "rounded-lg", "p-1")} aria-label="Auswahl der Verfahrensart" id="verfahren">
+                        <select aria-label="Auswahl der Verfahrensart" id="verfahren">
                             <option value="0" selected=true>{"Nur Hauptsacheverfahren"}</option>
                             <option value="1">{"Nur Verfahren zum vorläufigen Rechtsschutz"}</option>
                             <option value="2">{"Hauptsacheverfahren und Verfahren zum vorläufigen Rechtsschutz"}</option>
@@ -38,32 +38,45 @@ fn App() -> Html {
                         Du kannst aber auch manuell selbst Streitwerte angeben."}</label>
                     </p>
                     <p>
-                        <select class={classes!("border-2", "border-stone-400", "rounded-lg", "p-1")} aria-label="Auswahl des Themas" id="thema">
-                        <option value="0">{"Asylrecht: Zulässigkeit (z.B. Dublin, Drittstaatenfall, Folgeantrag)"}</option>
-                        <option value="1">{"Asylrecht: Anerkennungsverfahren"}</option>
-                        <option value="2">{"Asylrecht: Widerruf/Rücknahme"}</option>
-                        <option value="3">{"Asylrecht: Untätigkeitsklage"}</option>
-                        <option value="4" selected=true>{"Aufenthaltsrecht: Aufenthaltstitel inkl. Untätigkeitsklage"}</option>
-                        <option value="5">{"Ausweisung"}</option>
-                        <option value="6">{"Pass/Passersatz"}</option>
-                        <option value="7">{"Aufenthaltsrecht: Duldung und Abschiebung inkl. Ausbildungs-/Beschäftigungsduldung,
-                            Untätigkeitsklage"}</option>
-                        <option value="8">{"Einbürgerung und Feststellung der Staatsangehörigkeit"}</option>
+                        <select aria-label="Auswahl des Themas" id="thema">
+                            <option value="0">{"Asylrecht: Zulässigkeit (z.B. Dublin, Drittstaatenfall, Folgeantrag)"}</option>
+                            <option value="1">{"Asylrecht: Anerkennungsverfahren"}</option>
+                            <option value="2">{"Asylrecht: Widerruf/Rücknahme"}</option>
+                            <option value="3">{"Asylrecht: Untätigkeitsklage"}</option>
+                            <option value="4" selected=true>{"Aufenthaltsrecht: Aufenthaltstitel inkl. Untätigkeitsklage"}</option>
+                            <option value="5">{"Ausweisung"}</option>
+                            <option value="6">{"Pass/Passersatz"}</option>
+                            <option value="7">{"Aufenthaltsrecht: Duldung und Abschiebung inkl. Ausbildungs-/Beschäftigungsduldung,
+                                Untätigkeitsklage"}</option>
+                            <option value="8">{"Einbürgerung und Feststellung der Staatsangehörigkeit"}</option>
                         </select>
                     </p>
+                //     <div>
+                //         <div>{"Anzahl Personen"}</div>
+                //         <div>{"Streitwerte"}</div>
+                //         <div>{"Wertgebühr (§ 13 RVG)"}</div>
+                //         <div>{"Wertgebühr (§ 49 RVG / Prozesskostenhilfe)"}</div>
+                //         <div>{"Wertgebühr (GKG)"}</div>
+                //         // new row
+                //         <div></div>
+                //         <div>{"Hauptsache"}</div>
+                //         <div></div>
+                //         <div></div>
+                //         <div></div>                  
+                //     </div>
                 </div>
-                <div class={classes!("container", "max-w-screen-xl", "mx-auto", "px-4", "bg-linear-to-b", "from-stone-50", "to-stone-300")}>
-                    <h2 class={classes!("pt-4", "text-2xl", "font-medium")}>
+                <div class={classes!("graydient")}>
+                    <h2>
                         {"Rechtliche Hinweise"}
                     </h2>
                     <p>
                         {"Dieser Prozesskostenrechner berechnet gesetzliche Gebühren auf der Grundlage des 
                         Rechtsanwaltsvergütungsgesetzes ("}
-                        <a href="https://dejure.org/gesetze/RVG" class={classes!("text-blue-600", "hover:underline", "hover:text-violet-600")}>{"RVG"}</a>
+                        <a href="https://dejure.org/gesetze/RVG">{"RVG"}</a>
                         {"), des Gerichtskostengesetzes ("}
-                        <a href="https://dejure.org/gesetze/GKG" class={classes!("text-blue-600", "hover:underline", "hover:text-violet-600")}>{"GKG"}</a>
+                        <a href="https://dejure.org/gesetze/GKG">{"GKG"}</a>
                         {"), des "}
-                        <a href="https://www.bverwg.de/rechtsprechung/streitwertkatalog" class={classes!("text-blue-600", "hover:underline", "hover:text-violet-600")}>{"Streitwertkatalogs"}</a>
+                        <a href="https://www.bverwg.de/rechtsprechung/streitwertkatalog">{"Streitwertkatalogs"}</a>
                         {" des Bundesverwaltungsgerichts und meiner Erfahrung mit der Interpretation dieser Vorgaben durch die
                         Verwaltungsgerichte vornehmlich in NRW. Der Rechner dient nur einer unverbindlichen
                         Orientierung und kann eine fachkundige Beratung nicht ersetzen. Seine Nutzung erfolgt insofern auf eigene
@@ -93,19 +106,19 @@ fn App() -> Html {
                     <p>
                         {"Der Rechner ist zudem auch als Freie Software unter den Lizenzen Apache, Version 2.0, und MIT
                         veröffentlicht. Du kannst dir die Software also auch aus dem "}
-                        <a href="https://github.com/dusmarcel/mpkr25" class={classes!("text-blue-600", "hover:underline", "hover:text-violet-600")}>{"Repository"}</a>
+                        <a href="https://github.com/dusmarcel/mpkr25">{"Repository"}</a>
                         {" herunterladen und sie dann ganz auf einem Gerät deiner Wahl ausführen. In diesem Falle hast du mit meinem Server gar nichts mehr zu tun, und die
                         Notwendigkeit, Daten an meinen Server zu übertragen, entfällt ganz."}
                     </p>
                     <p>
                         {"Und schließlich geht es hier noch zu meinem „"}
-                        <a href="https://aufentha.lt/index.php/impressum/" class={classes!("text-blue-600", "hover:underline", "hover:text-violet-600")}>{"Impressum"}</a>
+                        <a href="https://aufentha.lt/index.php/impressum/">{"Impressum"}</a>
                         {"“."}
                     </p>
                 </div>
             </form>
             <noscript>{"This page contains webassembly and javascript content, please enable javascript in your browser."}</noscript>
-        </>
+        </div>
     }
 }
 
