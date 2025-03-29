@@ -1,7 +1,23 @@
 use yew::prelude::*;
+use web_sys::HtmlSelectElement;
 
 #[function_component]
 fn App() -> Html {
+    let l_verfahren_1 = use_state(|| "Hauptsache");
+    let onchange = {
+        let l_verfahren_1 = l_verfahren_1.clone();
+        Callback::from(move |e: Event| {
+            let select: HtmlSelectElement = e.target_unchecked_into();
+            let value = select.value();
+            match value.as_str() {
+                "0" => l_verfahren_1.set("Hauptsache"), // nur Hauptsache
+                "1" => l_verfahren_1.set("Vorläufiger Rechtsschutz"), // nur vorläufiger Rechtsschutz
+                "2" => l_verfahren_1.set("Hauptsache"), // beides
+                _ => {}
+            }
+        })
+    };
+
     html! {
         <div class="container">
             <form>
@@ -19,25 +35,25 @@ fn App() -> Html {
                     <h2>
                         {"Streitwerte"}
                     </h2>
-                    <p>
+                    <p class={classes!("mb-2")}>
                         {"Grundlage für die Berechnung der Gebühren ist der sogenannte Streitwert. Wir müssen also zuerst die Streitwerte für deine Angelegenheit ermitteln. Plural, weil gerade in gerichtlichen Verfahren häufig zusätzlich zur Klage noch ein Antrag auf Gewährung vorläufigen Rechtsschutzes erforderlich ist. Manchmal wird auch nur ein Antrag auf vorläufigen Rechtsschutz gestellt. Deswegen kann man hier verschiedene Optionen wählen. Außerdem hängt die konkrete Höhe des Streitwerts auch von der Anzahl der Personen ab, die in einem Verfahren zusammengefasst werden."}
                     </p>
-                    <p>
+                    <p class={classes!("mb-1")}>
                         <label for="verfahren">{"Wähle aus, ob die Gebühren nur für ein Hauptsacheverfahren, nur für dein Verfahren
                         zum vorläufigen Rechtsschutz, oder für beides berechnet werden sollen."}</label>
                     </p>
-                    <p>
-                        <select aria-label="Auswahl der Verfahrensart" id="verfahren">
+                    <p class={classes!("mb-2")}>
+                        <select aria-label="Auswahl der Verfahrensart" id="verfahren" {onchange}>
                             <option value="0" selected=true>{"Nur Hauptsacheverfahren"}</option>
                             <option value="1">{"Nur Verfahren zum vorläufigen Rechtsschutz"}</option>
                             <option value="2">{"Hauptsacheverfahren und Verfahren zum vorläufigen Rechtsschutz"}</option>
                         </select>
                     </p>
-                    <p>
+                    <p class={classes!("mb-1")}>
                         <label for="thema">{"Wähle ein Thema, dann versucht der Rechner, dir die passenden Streitwerte vorzuschlagen.
                         Du kannst aber auch manuell selbst Streitwerte angeben."}</label>
                     </p>
-                    <p>
+                    <p class={classes!("mb-2")}>
                         <select aria-label="Auswahl des Themas" id="thema">
                             <option value="0">{"Asylrecht: Zulässigkeit (z.B. Dublin, Drittstaatenfall, Folgeantrag)"}</option>
                             <option value="1">{"Asylrecht: Anerkennungsverfahren"}</option>
@@ -51,25 +67,37 @@ fn App() -> Html {
                             <option value="8">{"Einbürgerung und Feststellung der Staatsangehörigkeit"}</option>
                         </select>
                     </p>
-                //     <div>
-                //         <div>{"Anzahl Personen"}</div>
-                //         <div>{"Streitwerte"}</div>
-                //         <div>{"Wertgebühr (§ 13 RVG)"}</div>
-                //         <div>{"Wertgebühr (§ 49 RVG / Prozesskostenhilfe)"}</div>
-                //         <div>{"Wertgebühr (GKG)"}</div>
-                //         // new row
-                //         <div></div>
-                //         <div>{"Hauptsache"}</div>
-                //         <div></div>
-                //         <div></div>
-                //         <div></div>                  
-                //     </div>
+                    <div class={classes!("row", "fw-bold")}>
+                        <div class={classes!("col-2")}>
+                            <p><label for="anzahl">{"Anzahl Personen"}</label></p>
+                        </div>
+                        <div class={classes!("col-2")}>
+                            <p><label>{"Streitwerte"}</label></p>
+                        </div>
+                        <div class={classes!("col-2")}>
+                            <p><label>{"Wertgebühr (§ 13 RVG)"}</label></p>
+                        </div>
+                        <div class={classes!("col-2")}>
+                            <p><label>{"Wertgebühr (§ 49 RVG / Prozesskostenhilfe)"}</label></p>
+                        </div>
+                        <div class={classes!("col-2")}>
+                            <p><label>{"Differenz"}</label></p>
+                        </div>
+                        <div class={classes!("col-2")}>
+                            <p><label>{"Wertgebühr (GKG)"}</label></p>
+                        </div>
+                    </div>
+                    <div class={classes!("row")}>
+                        <div class={classes!("col-2")}></div>
+                        <div class={classes!("col-2")}><label>{ *l_verfahren_1 }</label></div>
+                        <div class={classes!("col-8")}></div>
+                    </div>
                 </div>
                 <div class={classes!("graydient")}>
                     <h2>
                         {"Rechtliche Hinweise"}
                     </h2>
-                    <p>
+                    <p class={classes!("mb-2")}>
                         {"Dieser Prozesskostenrechner berechnet gesetzliche Gebühren auf der Grundlage des 
                         Rechtsanwaltsvergütungsgesetzes ("}
                         <a href="https://dejure.org/gesetze/RVG">{"RVG"}</a>
@@ -94,7 +122,7 @@ fn App() -> Html {
                         zumindest theoretisch auch Fälle konstruiert werden können, in denen die Anrechnung auf die Verfahrensgebühr
                         in einer höheren Insatz erfolgt, bleiben diese Fälle hier um der Einfachheit willen unberücksichtigt."}
                     </p>
-                    <p>
+                    <p class={classes!("mb-2")}>
                         {"Der Rechner geht äußerst sparsam mit deinen Daten um. Zwar werden einige technisch benötigte Daten,
                         insbesondere deine IP-Adresse, an meinen Server gesendet und von meinem Server verarbeitet. Das ist nötig,
                         um die zum Rechner gehörenden Dateien an deinen Browser oder dein sonstiges Gerät, mit welchem du den
@@ -103,7 +131,7 @@ fn App() -> Html {
                         erzeugt werden, vollständig bei dir verbleiben, und erst gar nicht an meinen Server geschickt, geschweige
                         denn verarbeitet oder gespeichert werden."}
                     </p>
-                    <p>
+                    <p class={classes!("mb-2")}>
                         {"Der Rechner ist zudem auch als Freie Software unter den Lizenzen Apache, Version 2.0, und MIT
                         veröffentlicht. Du kannst dir die Software also auch aus dem "}
                         <a href="https://github.com/dusmarcel/mpkr25">{"Repository"}</a>
