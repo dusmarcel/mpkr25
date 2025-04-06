@@ -1,46 +1,30 @@
-//use derive_more::Display;
-//use yew::prelude::*;
+use serde::Serialize;
 
-//use std::collections::HashMap;
-
-#[derive(Clone, PartialEq)]//, Display, PartialEq)]
+#[derive(Clone, Serialize)]
 pub enum Verfahren {
     Hauptsache,
     Vorlaeufig,
     Beides
 }
 
-#[derive(Clone, PartialEq)]//, Display, PartialEq, Properties)]
+#[derive(Clone, Serialize)]
 pub struct Mpkr {
-    pub verfahren: Verfahren,
+    #[serde(default="Verfahren::Hauptsache")]
+    pub v: Verfahren,
 }
 
 impl Mpkr {
     pub fn new() -> Self {
         Self {
-            verfahren: Verfahren::Hauptsache
+            v: Verfahren::Hauptsache
         }
     }
 
-    pub fn set_verfahren(&mut self, verfahren: Verfahren) {
-        self.verfahren = verfahren;
-    }
-
-    pub fn get_props(&self) -> String {
-        //let mut props = HashMap::new();
-        format!("v={}", match self.verfahren {
-            Verfahren::Hauptsache => "h",
-            Verfahren::Vorlaeufig => "v",
-            Verfahren::Beides => "b"
-        })
-        // props.insert(
-        //     "v".to_string(),
-        //     match self.verfahren {
-        //         Verfahren::Hauptsache => "h".to_string(),
-        //         Verfahren::Vorlaeufig => "v".to_string(),
-        //         Verfahren::Beides => "b".to_string()
-        //     }
-        // );
-        // props
+    pub fn get_verf_string(&self) -> String {
+        match self.v {
+            Verfahren::Hauptsache => "Hauptsacheverfahren".to_string(),
+            Verfahren::Vorlaeufig => "vorläufiger Rechtsschutz".to_string(),
+            Verfahren::Beides => "Hauptsacheverfahren".to_string()
+        }
     }
 }

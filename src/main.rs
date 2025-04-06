@@ -1,10 +1,8 @@
-//use std::collections::HashMap;
-
 use yew::prelude::*;
 use yew_router::prelude::*;
-use web_sys::HtmlSelectElement;
+use web_sys::{console, HtmlSelectElement};
 
-use mpkr25::mpkr::Mpkr; //{Mpkr, Verfahren};
+use mpkr25::mpkr::{Mpkr, Verfahren};
 
 #[derive(Properties, PartialEq)]
 struct LProps {
@@ -15,36 +13,35 @@ struct LProps {
 enum Route {
     #[at("/")]
     Home,
-    #[at("/l/:props")]
-    L {props: String},
 }
 
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! { <Home /> },
-        Route::L {props} => html! { <L props={props} /> },
     }
 }
 
 #[function_component(Home)]
 fn home() -> Html {
-    let mpkr = Mpkr::new(); 
+    let mpkr = use_state(|| Mpkr::new());
     let navigator = use_navigator().unwrap();
 
-    let l_verfahren_1 = use_state(|| "Hauptsache");
     let on_change_verfahren = {
         let mpkr = mpkr.clone();
         let navigator = navigator.clone();
-        //let l_verfahren_1 = l_verfahren_1.clone();
         Callback::from(move |e: Event| {
-            let _select: HtmlSelectElement = e.target_unchecked_into();
-            //let value = select.value();
-            //match value.as_str() {
-            //    "0" => mpkr.set_verfahren(Verfahren::Hauptsache), //,l_verfahren_1.set("Hauptsache"), // nur Hauptsache
-            //    "1" => mpkr.set_verfahren(Verfahren::Vorlaeufig), // nur vorläufiger Rechtsschutz
-            //    "2" => mpkr.set_verfahren(Verfahren::Beides) // beides
-            //}
-            navigator.push(&Route::L {props: mpkr.get_props() });
+            let select: HtmlSelectElement = e.target_unchecked_into();
+            let value = select.value();
+            let new_v = match value.as_str() {
+                "0" => Verfahren::Hauptsache,
+                "1" => Verfahren::Vorlaeufig,
+                "2" => Verfahren::Beides,
+                _ => Verfahren::Hauptsache
+            };
+            mpkr.set(Mpkr { v: new_v, ..(*mpkr).clone() });
+            navigator.push_with_query(&Route::Home, &*mpkr).unwrap_or_else(|e| {
+                console::error_2(&"Error: ".into(), &e.to_string().into());
+            });
         })
     };
 
@@ -119,7 +116,7 @@ fn home() -> Html {
                     </div>
                     <div class={classes!("row")}>
                         <div class={classes!("col-2")}></div>
-                        <div class={classes!("col-2")}><label>{ *l_verfahren_1 }</label></div>
+                        <div class={classes!("col-2")}><label>{ mpkr.get_verf_string() }</label></div>
                         <div class={classes!("col-8")}></div>
                     </div>
                 </div>
@@ -178,11 +175,6 @@ fn home() -> Html {
             <noscript>{"This page contains webassembly and javascript content, please enable javascript in your browser."}</noscript>
         </div>
     }
-}
-
-#[function_component(L)]
-fn l(LProps { props }: &LProps) -> Html {
-    html! { <div>{props}</div> }
 }
 
 #[function_component(App)]
