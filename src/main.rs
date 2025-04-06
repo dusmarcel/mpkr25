@@ -1,20 +1,50 @@
+//use std::collections::HashMap;
+
 use yew::prelude::*;
+use yew_router::prelude::*;
 use web_sys::HtmlSelectElement;
 
-#[function_component]
-fn App() -> Html {
+use mpkr25::mpkr::Mpkr; //{Mpkr, Verfahren};
+
+#[derive(Properties, PartialEq)]
+struct LProps {
+    props: String,
+}
+
+#[derive(Routable, PartialEq, Clone)]
+enum Route {
+    #[at("/")]
+    Home,
+    #[at("/l/:props")]
+    L {props: String},
+}
+
+fn switch(routes: Route) -> Html {
+    match routes {
+        Route::Home => html! { <Home /> },
+        Route::L {props} => html! { <L props={props} /> },
+    }
+}
+
+#[function_component(Home)]
+fn home() -> Html {
+    let mpkr = Mpkr::new(); 
+    let navigator = use_navigator().unwrap();
+
     let l_verfahren_1 = use_state(|| "Hauptsache");
-    let onchange = {
-        let l_verfahren_1 = l_verfahren_1.clone();
+    let on_change_verfahren = {
+        let mpkr = mpkr.clone();
+        let navigator = navigator.clone();
+        //let l_verfahren_1 = l_verfahren_1.clone();
         Callback::from(move |e: Event| {
-            let select: HtmlSelectElement = e.target_unchecked_into();
-            let value = select.value();
-            match value.as_str() {
-                "0" => l_verfahren_1.set("Hauptsache"), // nur Hauptsache
-                "1" => l_verfahren_1.set("Vorläufiger Rechtsschutz"), // nur vorläufiger Rechtsschutz
-                "2" => l_verfahren_1.set("Hauptsache"), // beides
-                _ => {}
-            }
+            let _select: HtmlSelectElement = e.target_unchecked_into();
+            //let value = select.value();
+            //match value.as_str() {
+            //    "0" => mpkr.set_verfahren(Verfahren::Hauptsache), //,l_verfahren_1.set("Hauptsache"), // nur Hauptsache
+            //    "1" => mpkr.set_verfahren(Verfahren::Vorlaeufig), // nur vorläufiger Rechtsschutz
+            //    "2" => mpkr.set_verfahren(Verfahren::Beides) // beides
+            //}
+            navigator.push(&Route::L {props: mpkr.get_props() });
         })
     };
 
@@ -43,7 +73,7 @@ fn App() -> Html {
                         zum vorläufigen Rechtsschutz, oder für beides berechnet werden sollen."}</label>
                     </p>
                     <p class={classes!("mb-2")}>
-                        <select aria-label="Auswahl der Verfahrensart" id="verfahren" {onchange}>
+                        <select aria-label="Auswahl der Verfahrensart" id="verfahren" onchange={on_change_verfahren}>
                             <option value="0" selected=true>{"Nur Hauptsacheverfahren"}</option>
                             <option value="1">{"Nur Verfahren zum vorläufigen Rechtsschutz"}</option>
                             <option value="2">{"Hauptsacheverfahren und Verfahren zum vorläufigen Rechtsschutz"}</option>
@@ -147,6 +177,20 @@ fn App() -> Html {
             </form>
             <noscript>{"This page contains webassembly and javascript content, please enable javascript in your browser."}</noscript>
         </div>
+    }
+}
+
+#[function_component(L)]
+fn l(LProps { props }: &LProps) -> Html {
+    html! { <div>{props}</div> }
+}
+
+#[function_component(App)]
+fn app() -> Html {
+    html! {
+        <BrowserRouter>
+            <Switch<Route> render={switch} />
+        </BrowserRouter>
     }
 }
 
